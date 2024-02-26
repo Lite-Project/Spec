@@ -11,12 +11,12 @@
 $RT = @()
 $info = Get-ComputerInfo
 $R = (Get-CimInstance Win32_PhysicalMemory | Select-Object Manufacturer, Speed, MemoryType)
-$RSM = @{
+$RSM = @{ #Ram Speed Map
     'DDR3' = 800
     'DDR4' = 2133
     'DDR5' = 4801
 }
-foreach ($module in $R) {
+foreach ($module in $R) { #Using Speed map to determine RAM type
     foreach ($type in $RSM.GetEnumerator() | Sort-Object Value -Descending) {
         if ($module.Speed -ge $type.Value) {
             $RType = $type.Key
